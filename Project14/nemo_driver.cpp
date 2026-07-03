@@ -14,7 +14,7 @@ public:
 		nemoAPI_.sellingStock(stockCode, count, price);
 	}
 	int getPrice(string stockCode) {
-		nemoAPI_.getMarketPrice(stockCode, minute_);
+	    return nemoAPI_.getMarketPrice(stockCode, minute_);
 	}
 
 private:
