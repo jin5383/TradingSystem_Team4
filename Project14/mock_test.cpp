@@ -68,9 +68,31 @@ TEST(TradingSystemDefault, MockgetPrice)
 
 	EXPECT_CALL(*mockBrocker, getPrice(_))
 		.Times(1)
-		.WillRepeatedly(Return(500000));;
+		.WillRepeatedly(Return(500000));
 
 	actual_price = system.getPrice("005930");
 
 	EXPECT_EQ(expected_price, actual_price);
+}
+
+TEST(TradingSystemDefault, buyNiceTiming)
+{
+	TradingSystem system;
+	int expected_price = 300000;
+	int actual_price;
+
+	system.selectStockerBrocker(MOCK);
+	StockerBrocker* currentBrocker = system.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
+
+	EXPECT_CALL(*mockBrocker, getPrice(_))
+		.Times(3)
+		.WillOnce(Return(1000))
+		.WillOnce(Return(2000))
+		.WillOnce(Return(3000));
+
+	EXPECT_CALL(*mockBrocker, buy("AAA", 100, 3000))
+		.Times(1);
+
+	system.buyNiceTiming("AAA", expected_price);
 }
