@@ -60,9 +60,6 @@ public:
 	}
 	void selectStockerBrockerMock(StockerBrocker* brocker) {
 		stocker = brocker;
-		//select API
-		//RJH
-
 	}
 private:
 	StockerBrocker* stocker;
