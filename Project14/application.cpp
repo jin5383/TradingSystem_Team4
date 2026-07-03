@@ -1,26 +1,40 @@
 #include "stocker_brocker.h"
 #include <vector>
+#include "nemo_driver.cpp"
+#include "kiwer_driver.cpp"
+#include "mock_driver.cpp"
 
 using namespace std;
 
 class BrockerFactory {
 public:
-	StockerBrocker getStockerBrocker(string brocker) {
-		//
+	static StockerBrocker* getStockerBrocker(string brocker) {
+		if (brocker == KIWER) {
+//			KiwerAPI kiwerAPI;
+//			return new KiwerAdapter(kiwerAPI);
+		}
+		if (brocker == NEMO) {
+			NemoAPI  nemoAPI;
+			return new NemoAdapter(nemoAPI, 10);
+		}
+		if (brocker == MOCK) {
+//			MockAPI  mockAPI;
+//			return new MockAdapter(mockAPI);
+		}
+		return nullptr;
 	}
 };
 
 class TradingSystem {
 public:
 	void selectStockerBrocker(string brocker) {
-		//select API
-		//RJH
+		stocker = BrockerFactory::getStockerBrocker(brocker);
 	}
 	void login(string ID, string password) {
-		//RJH
+		stocker->login(ID, password);
 	}
 	void buy(string stockCode, int count, int price) {
-		//RJH
+		stocker->buy(stockCode, count, price);
 	}
 	void sell(string stockCode, int count, int price) {
 		//KKH
