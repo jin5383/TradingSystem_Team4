@@ -4,8 +4,9 @@
 class KiwerAdapter : public StockerBrocker {
 public:
 	KiwerAdapter(KiwerAPI* kiwer) {
-		if (kiwer == nullptr)
+		if (kiwer == nullptr) {
 			throw std::invalid_argument("KiwerAdapter: kiwer must not be null");
+		}
 		m_kiwer = kiwer;
 	}
 	void login(string ID, string password) override {
