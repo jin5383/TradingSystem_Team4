@@ -6,6 +6,14 @@
 using namespace testing;
 using std::cout;
 
+class MockDriver : public StockerBrocker {
+public:
+	MOCK_METHOD(void, login, (std::string id, std::string password), (override));
+	MOCK_METHOD(void, buy, (std::string stockCode, int count, int price), (override));
+	MOCK_METHOD(void, sell, (std::string stockCode, int count, int price), (override));
+	MOCK_METHOD(int, getPrice, (std::string stockCode), (override));
+};
+
 TEST(TradingSystemDefault, selectMock)
 {
 	TradingSystem system;
@@ -75,10 +83,12 @@ TEST(TradingSystemDefault, MockgetPrice)
 {
 	TradingSystem system;
 	int expected_price = 500000;
-	int actual_price;
+	string testStockCode = "005930";
+	MockDriver* mockDriver = new MockDriver();
+	EXPECT_CALL(*mockDriver, getPrice(testStockCode)).WillOnce(Return(expected_price));
+	system.selectStockerBrodker(mockDriver);
 
-	system.selectStockerBrocker(MOCK);
-	actual_price = system.getPrice("005930");
+	int actual_price = system.getPrice("005930");
 
 	EXPECT_EQ(expected_price, actual_price);
 }

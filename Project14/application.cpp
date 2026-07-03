@@ -12,16 +12,16 @@ class BrockerFactory {
 public:
 	static StockerBrocker* getStockerBrocker(string brocker) {
 		if (brocker == KIWER) {
-//			KiwerAPI kiwerAPI;
-//			return new KiwerAdapter(kiwerAPI);
+			//			KiwerAPI kiwerAPI;
+			//			return new KiwerAdapter(kiwerAPI);
 		}
 		if (brocker == NEMO) {
 			NemoAPI  nemoAPI;
 			return new NemoAdapter(nemoAPI, 10);
 		}
 		if (brocker == MOCK) {
-//			MockAPI  mockAPI;
-//			return new MockAdapter(mockAPI);
+			//			MockAPI  mockAPI;
+			//			return new MockAdapter(mockAPI);
 		}
 		return nullptr;
 	}
@@ -34,6 +34,9 @@ public:
 
 	void selectStockerBrocker(string brocker) {
 		stocker = BrockerFactory::getStockerBrocker(brocker);
+	}
+	void selectStockerBrodker(StockerBrocker* stocker) {
+		this->stocker = stocker;
 	}
 	void login(string ID, string password) {
 		stocker->login(ID, password);
@@ -52,7 +55,7 @@ public:
 		return stocker->getPrice(stockCode);
 	}
 
-  void buyNiceTiming(string stockCode, int totalAmount) {
+	void buyNiceTiming(string stockCode, int totalAmount) {
 		//KKH
 		std::vector<int> prices = readPriceTrend(*stocker, stockCode);
 		if (!isUptrend(prices)) {
