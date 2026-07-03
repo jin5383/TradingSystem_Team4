@@ -27,6 +27,7 @@ public:
 	}
 	int getPrice(string stockCode) {
 		//KKH
+		return 0;
 	}
 	void buyNiceTiming() {
 		//KKH

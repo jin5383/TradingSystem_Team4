@@ -147,7 +147,7 @@
     <ClCompile Include="nemo_api.cpp" />
     <ClCompile Include="nemo_driver.cpp" />
     <ClCompile Include="stocker_brocker.h" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="mock_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
