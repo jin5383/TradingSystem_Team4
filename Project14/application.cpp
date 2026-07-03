@@ -9,7 +9,7 @@ public:
 
 class TradingSystem {
 public:
-	void selectStockerBrocker(int a) {
+	void selectStockerBrocker(string brocker) {
 		//select API
 		//RJH
 	}

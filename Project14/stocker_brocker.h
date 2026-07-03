@@ -4,6 +4,7 @@ using std::string;
 
 const string NEMO = "nemo";
 const string KIWER = "kiwer";
+const string MOCK = "mock";
 
 interface StockerBrocker {
 	virtual void login(string ID, string password);
