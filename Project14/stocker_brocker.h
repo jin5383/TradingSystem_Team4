@@ -1,3 +1,6 @@
+#ifndef STOCK_BROCKER_H
+#define STOCK_BROCKER_H
+
 #include <string>
 using std::string;
 #define interface struct
@@ -12,3 +15,5 @@ interface StockerBrocker {
 	virtual void sell(string stockCode, int count, int price);
 	virtual int getPrice(string stockCode);
 };
+
+#endif // STOCK_BROCKER_H
