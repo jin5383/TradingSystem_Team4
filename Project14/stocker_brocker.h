@@ -14,6 +14,7 @@ const string MOCK = "mock";
 
 
 interface StockerBrocker {
+	virtual ~StockerBrocker() = default;
 	virtual void login(string ID, string password) = 0;
 	virtual void buy(string stockCode, int count, int price) = 0;
 	virtual void sell(string stockCode, int count, int price) = 0;

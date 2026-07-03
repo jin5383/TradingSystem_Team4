@@ -15,9 +15,11 @@ int main(void)
 TEST(Trading, Apptest0)
 {
 	TradingSystem ts;
-	StockerBrockerMock brocker;
-	ts.selectStockerBrockerMock(&brocker);
-	EXPECT_CALL(brocker, getPrice("Code"))
+	ts.selectStockerBrocker(MOCK);
+	StockerBrocker* currentBrocker = ts.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
+
+	EXPECT_CALL(*mockBrocker, getPrice("Code"))
 		.Times(3);
 	ts.buyNiceTiming("Code", 10);
 
@@ -26,9 +28,11 @@ TEST(Trading, Apptest0)
 TEST(Trading, Apptest1)
 {
 	TradingSystem ts;
-	StockerBrockerMock brocker;
-	ts.selectStockerBrockerMock(&brocker);
-	EXPECT_CALL(brocker, getPrice("Code"))
+	ts.selectStockerBrocker(MOCK);
+	StockerBrocker* currentBrocker = ts.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
+
+	EXPECT_CALL(*mockBrocker, getPrice("Code"))
 		.Times(3);
 	ts.sellNiceTiming("Code", 10);
 
