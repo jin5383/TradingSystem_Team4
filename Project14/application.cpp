@@ -51,7 +51,8 @@ public:
 		if (!stocker) return 0;
 		return stocker->getPrice(stockCode);
 	}
-	void buyNiceTiming(std::string stockCode, int totalAmount) {
+
+  void buyNiceTiming(string stockCode, int totalAmount) {
 		//KKH
 		std::vector<int> prices = readPriceTrend(*stocker, stockCode);
 		if (!isUptrend(prices)) {
@@ -66,7 +67,7 @@ public:
 
 		buy(stockCode, count, lastPrice);
 	}
-	void sellNiceTining(string stockCode, int count) {
+	void sellNiceTiming(string stockCode, int count) {
 		//HSJ
 		vector<int> price;
 		for (int i = 0; i < 3;i++) {
@@ -77,6 +78,9 @@ public:
 		if (price[0] > price[1] && price[1] > price[2]) {
 			stocker->buy(stockCode, count, price[2]);
 		}
+	}
+	void selectStockerBrockerMock(StockerBrocker* brocker) {
+		stocker = brocker;
 	}
 private:
 	StockerBrocker* stocker;
