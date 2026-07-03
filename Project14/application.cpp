@@ -12,16 +12,16 @@ class BrockerFactory {
 public:
 	static StockerBrocker* getStockerBrocker(string brocker) {
 		if (brocker == KIWER) {
-			//			KiwerAPI kiwerAPI;
-			//			return new KiwerAdapter(kiwerAPI);
+//			KiwerAPI kiwerAPI;
+//			return new KiwerAdapter(kiwerAPI);
 		}
 		if (brocker == NEMO) {
 			NemoAPI  nemoAPI;
 			return new NemoAdapter(nemoAPI, 10);
 		}
 		if (brocker == MOCK) {
-			//			MockAPI  mockAPI;
-			//			return new MockAdapter(mockAPI);
+//			MockAPI  mockAPI;
+//			return new MockAdapter(mockAPI);
 		}
 		return nullptr;
 	}
