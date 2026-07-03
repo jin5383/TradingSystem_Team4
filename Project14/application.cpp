@@ -43,10 +43,10 @@ public:
 		//KKH
 		return 0;
 	}
-	void buyNiceTiming() {
+	void buyNiceTiming(string stockCode, int price) {
 		//KKH
 	}
-	void sellNiceTining(string stockCode, int count) {
+	void sellNiceTiming(string stockCode, int count) {
 		//HSJ
 		vector<int> price;
 		for (int i = 0; i < 3;i++) {
@@ -57,6 +57,9 @@ public:
 		if (price[0] > price[1] && price[1] > price[2]) {
 			stocker->buy(stockCode, count, price[2]);
 		}
+	}
+	void selectStockerBrockerMock(StockerBrocker* brocker) {
+		stocker = brocker;
 	}
 private:
 	StockerBrocker* stocker;
