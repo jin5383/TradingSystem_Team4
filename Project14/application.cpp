@@ -78,7 +78,7 @@ public:
 		}
 
 		if (price[0] > price[1] && price[1] > price[2]) {
-			stocker->buy(stockCode, count, price[2]);
+			stocker->sell(stockCode, count, price[2]);
 		}
 	}
 	StockerBrocker* getBrocker() {

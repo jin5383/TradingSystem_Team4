@@ -20,8 +20,13 @@ TEST(Trading, Apptest0)
 	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
 
 	EXPECT_CALL(*mockBrocker, getPrice("Code"))
-		.Times(3);
-	ts.buyNiceTiming("Code", 10);
+		.Times(3)
+		.WillOnce(Return(10))
+		.WillOnce(Return(20))
+		.WillOnce(Return(30));
+	EXPECT_CALL(*mockBrocker, buy("Code", _, _))
+		.Times(1);
+	ts.buyNiceTiming("Code", 1000);
 
 }
 
@@ -33,7 +38,13 @@ TEST(Trading, Apptest1)
 	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
 
 	EXPECT_CALL(*mockBrocker, getPrice("Code"))
-		.Times(3);
+		.Times(3)
+		.WillOnce(Return(30))
+		.WillOnce(Return(20))
+		.WillOnce(Return(10));
+	EXPECT_CALL(*mockBrocker, sell("Code", _, _))
+		.Times(1);
+
 	ts.sellNiceTiming("Code", 10);
 
 }
