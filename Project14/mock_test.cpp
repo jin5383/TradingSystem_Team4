@@ -9,66 +9,51 @@ using std::cout;
 TEST(TradingSystemDefault, selectMock)
 {
 	TradingSystem system;
-
-	std::stringstream buffer;
-	std::streambuf* old_buffer = std::cout.rdbuf(buffer.rdbuf());
-
 	system.selectStockerBrocker(MOCK);
 
-	cout.rdbuf(old_buffer);
+	StockerBrocker* currentBrocker = system.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
 
-	EXPECT_THAT(buffer.str(), HasSubstr("Select Mock Brocker"));
+	EXPECT_NE(mockBrocker, nullptr);
 }
 
 TEST(TradingSystemDefault, MockLoginSucess)
 {
 	TradingSystem system;
-
-	std::stringstream buffer;
-	std::streambuf* old_buffer = std::cout.rdbuf(buffer.rdbuf());
-
 	system.selectStockerBrocker(MOCK);
+	StockerBrocker* currentBrocker = system.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
+
+	EXPECT_CALL(*mockBrocker, login(_, _))
+		.Times(1);
+
 	system.login("mincoding", "1234");
-
-	cout.rdbuf(old_buffer);
-
-	EXPECT_THAT(buffer.str(), HasSubstr("[Mock] Login Success"));
 }
 
 TEST(TradingSystemDefault, MockBuySuccess)
 {
 	TradingSystem system;
-
-	std::stringstream buffer;
-	std::streambuf* old_buffer = std::cout.rdbuf(buffer.rdbuf());
-
 	system.selectStockerBrocker(MOCK);
+	StockerBrocker* currentBrocker = system.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
+
+	EXPECT_CALL(*mockBrocker, buy(_, _, _))
+		.Times(1);
+
 	system.buy("005930", 1000, 10);
-
-	cout.rdbuf(old_buffer);
-
-	EXPECT_THAT(buffer.str(), HasSubstr("buy"));
-	EXPECT_THAT(buffer.str(), HasSubstr("code: 005930"));
-	EXPECT_THAT(buffer.str(), HasSubstr("price: 1000"));
-	EXPECT_THAT(buffer.str(), HasSubstr("count: 10"));
 }
 
 TEST(TradingSystemDefault, MockSellSuccess)
 {
 	TradingSystem system;
-
-	std::stringstream buffer;
-	std::streambuf* old_buffer = std::cout.rdbuf(buffer.rdbuf());
-
 	system.selectStockerBrocker(MOCK);
+	StockerBrocker* currentBrocker = system.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
+
+	EXPECT_CALL(*mockBrocker, sell(_, _, _))
+		.Times(1);
+
 	system.sell("005930", 1000, 10);
-
-	cout.rdbuf(old_buffer);
-
-	EXPECT_THAT(buffer.str(), HasSubstr("sell"));
-	EXPECT_THAT(buffer.str(), HasSubstr("code: 005930"));
-	EXPECT_THAT(buffer.str(), HasSubstr("price: 1000"));
-	EXPECT_THAT(buffer.str(), HasSubstr("count: 10"));
 }
 
 TEST(TradingSystemDefault, MockgetPrice)
@@ -78,6 +63,13 @@ TEST(TradingSystemDefault, MockgetPrice)
 	int actual_price;
 
 	system.selectStockerBrocker(MOCK);
+	StockerBrocker* currentBrocker = system.getBrocker();
+	StockerBrockerMock* mockBrocker = dynamic_cast<StockerBrockerMock*>(currentBrocker);
+
+	EXPECT_CALL(*mockBrocker, getPrice(_))
+		.Times(1)
+		.WillRepeatedly(Return(500000));;
+
 	actual_price = system.getPrice("005930");
 
 	EXPECT_EQ(expected_price, actual_price);

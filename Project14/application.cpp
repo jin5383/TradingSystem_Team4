@@ -20,8 +20,7 @@ public:
 			return new NemoAdapter(nemoAPI, 10);
 		}
 		if (brocker == MOCK) {
-//			MockAPI  mockAPI;
-//			return new MockAdapter(mockAPI);
+			return new StockerBrockerMock();
 		}
 		return nullptr;
 	}
@@ -32,6 +31,9 @@ public:
 	const static int PRICE_CHECK_INTERVAL_MS = 200;
 	const static int PRICE_CHECK_COUNT = 3;
 
+	~TradingSystem() {
+		delete stocker;
+	}
 	void selectStockerBrocker(string brocker) {
 		stocker = BrockerFactory::getStockerBrocker(brocker);
 	}
@@ -79,11 +81,11 @@ public:
 			stocker->buy(stockCode, count, price[2]);
 		}
 	}
-	void selectStockerBrockerMock(StockerBrocker* brocker) {
-		stocker = brocker;
+	StockerBrocker* getBrocker() {
+		return stocker;
 	}
 private:
-	StockerBrocker* stocker;
+	StockerBrocker* stocker = nullptr;
 
 	std::vector<int> readPriceTrend(StockerBrocker& driver, const std::string& stockCode) {
 		std::vector<int> prices;
