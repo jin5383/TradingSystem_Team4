@@ -139,12 +139,13 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="kiwer_api.cpp" />
     <ClCompile Include="kiwer_driver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nemo_api.cpp" />
     <ClCompile Include="nemo_driver.cpp" />
-    <ClCompile Include="stocker_brocker.cpp" />
+    <ClCompile Include="stocker_brocker.h" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
