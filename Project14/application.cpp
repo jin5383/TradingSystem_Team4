@@ -1,3 +1,5 @@
+#include <vector>
+#include <windows.h>
 #include "stocker_brocker.h"
 #include <vector>
 #include "nemo_driver.cpp"
@@ -27,6 +29,9 @@ public:
 
 class TradingSystem {
 public:
+	const static int PRICE_CHECK_INTERVAL_MS = 200;
+	const static int PRICE_CHECK_COUNT = 3;
+
 	void selectStockerBrocker(string brocker) {
 		stocker = BrockerFactory::getStockerBrocker(brocker);
 	}
@@ -38,13 +43,29 @@ public:
 	}
 	void sell(string stockCode, int count, int price) {
 		//KKH
+		if (!stocker) return;
+		stocker->sell(stockCode, count, price);
 	}
 	int getPrice(string stockCode) {
 		//KKH
-		return 0;
+		if (!stocker) return 0;
+		return stocker->getPrice(stockCode);
 	}
-	void buyNiceTiming(string stockCode, int price) {
+
+  void buyNiceTiming(string stockCode, int totalAmount) {
 		//KKH
+		std::vector<int> prices = readPriceTrend(*stocker, stockCode);
+		if (!isUptrend(prices)) {
+			return;
+		}
+
+		int lastPrice = prices.back();
+		int count = totalAmount / lastPrice;
+		if (count <= 0) {
+			return;
+		}
+
+		buy(stockCode, count, lastPrice);
 	}
 	void sellNiceTiming(string stockCode, int count) {
 		//HSJ
@@ -63,4 +84,24 @@ public:
 	}
 private:
 	StockerBrocker* stocker;
+
+	std::vector<int> readPriceTrend(StockerBrocker& driver, const std::string& stockCode) {
+		std::vector<int> prices;
+
+		for (int i = 0; i < PRICE_CHECK_COUNT; ++i) {
+			if (i > 0) {
+				Sleep(PRICE_CHECK_INTERVAL_MS);
+			}
+			prices.push_back(driver.getPrice(stockCode));
+		}
+		return prices;
+	}
+
+	bool isUptrend(const std::vector<int>& prices) {
+		if (prices.size() < PRICE_CHECK_COUNT) {
+			return false;
+		}
+
+		return prices[0] < prices[1] && prices[1] < prices[2];
+	}
 };
