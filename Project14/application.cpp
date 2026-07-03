@@ -64,7 +64,7 @@ public:
 			return;
 		}
 
-		buy(stockCode, lastPrice, count);
+		buy(stockCode, count, lastPrice);
 	}
 	void sellNiceTining(string stockCode, int count) {
 		//HSJ
@@ -83,10 +83,6 @@ private:
 
 	std::vector<int> readPriceTrend(StockerBrocker& driver, const std::string& stockCode) {
 		std::vector<int> prices;
-
-		if (prices.size() < PRICE_CHECK_COUNT) {
-			return prices;
-		}
 
 		for (int i = 0; i < PRICE_CHECK_COUNT; ++i) {
 			if (i > 0) {
